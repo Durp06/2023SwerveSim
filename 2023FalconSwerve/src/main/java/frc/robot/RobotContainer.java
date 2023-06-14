@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -14,6 +15,7 @@ import frc.robot.commands.SetSwerveDrive;
 import frc.robot.simulation.FieldSim;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.Constants.USB;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,6 +29,7 @@ public class RobotContainer {
 
   private final FieldSim m_fieldSim = new FieldSim(m_robotDrive);
 
+  static CommandXboxController controller = new CommandXboxController(USB.xBoxController);
   static Joystick leftJoystick = new Joystick(USB.leftJoystick);
   static Joystick rightJoystick = new Joystick(USB.rightJoystick);
 
@@ -41,9 +44,9 @@ public class RobotContainer {
             // Turning is controlled by the X axis of the right stick.
             new SetSwerveDrive(
                     m_robotDrive,
-                    ()-> leftJoystick.getY(),
-                    ()-> leftJoystick.getX(),
-                    ()-> rightJoystick.getX(),
+                    ()-> controller.getLeftY(),
+                    ()-> controller.getLeftX(),
+                    ()-> controller.getRightX(),
                     false));
 
     m_fieldSim.initSim();
@@ -59,7 +62,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-
+  
   }
 
   /**
